@@ -1,0 +1,15 @@
+
+<div class="fixed top-0 right-0 z-50 p-4 max-w-xs w-full space-y-2 pointer-events-none">
+  <div *ngFor="let toast of toasts" 
+       class="glass-card rounded-lg p-4 shadow-lg transform transition-all duration-300 animate-in slide-in-from-right-full pointer-events-auto"
+       [class.bg-green-500/20]="toast.type === 'success'"
+       [class.bg-red-500/20]="toast.type === 'error'"
+       [class.bg-blue-500/20]="toast.type === 'info'">
+    <div class="flex justify-between items-start">
+      <p class="text-white">{{ toast.message }}</p>
+      <button (click)="removeToast(toast.id)" class="text-white/60 hover:text-white">
+        <i class="lucide lucide-x" style="width: 16px; height: 16px;"></i>
+      </button>
+    </div>
+  </div>
+</div>

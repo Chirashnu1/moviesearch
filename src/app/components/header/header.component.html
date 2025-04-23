@@ -1,0 +1,18 @@
+
+<header class="sticky top-0 z-10 bg-movie-dark/90 backdrop-blur-sm border-b border-white/10">
+  <div class="container mx-auto px-4 py-4 flex flex-col sm:flex-row justify-between items-center">
+    <a routerLink="/" class="text-primary font-bold text-2xl mb-2 sm:mb-0">
+      Film Fanatic
+    </a>
+    <nav class="flex space-x-4">
+      <a *ngFor="let link of navLinks" 
+         [routerLink]="link.path" 
+         routerLinkActive="bg-primary/20 text-primary"
+         [routerLinkActiveOptions]="{exact: link.path === '/'}"
+         class="flex items-center space-x-1 px-3 py-2 rounded-md transition-colors hover:bg-white/5 text-white/80 hover:text-white">
+        <i class="lucide" [ngClass]="'lucide-' + link.icon"></i>
+        <span>{{link.label}}</span>
+      </a>
+    </nav>
+  </div>
+</header>

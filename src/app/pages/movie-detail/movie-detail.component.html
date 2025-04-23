@@ -1,0 +1,120 @@
+
+<div class="py-6 animate-fade-in">
+  <a (click)="router.navigate(['/search'])" class="flex items-center text-primary hover:underline mb-6 cursor-pointer">
+    <i class="lucide lucide-arrow-left mr-1" style="width: 18px; height: 18px;"></i>
+    Back
+  </a>
+
+  <div *ngIf="loading" class="flex justify-center items-center h-[70vh]">
+    <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+  </div>
+
+  <div *ngIf="!loading && !movie" class="text-center my-12">
+    <h2 class="text-2xl font-bold mb-4">Movie not found</h2>
+    <a routerLink="/search" class="text-primary hover:underline">
+      Back to search
+    </a>
+  </div>
+
+  <div *ngIf="!loading && movie" class="grid grid-cols-1 md:grid-cols-3 gap-8">
+    <div class="md:col-span-1">
+      <div class="glass-card rounded-lg overflow-hidden">
+        <img
+          [src]="movie.Poster !== 'N/A' ? movie.Poster : placeholderImage"
+          [alt]="movie.Title"
+          class="w-full h-auto"
+        />
+      </div>
+
+      <!-- IMAGE GALLERY BELOW POSTER -->
+      <div class="mt-4 grid grid-cols-3 gap-2">
+        <img
+          *ngFor="let url of galleryImages; let idx = index"
+          [src]="url"
+          [alt]="'Movie Gallery ' + (idx + 1)"
+          class="rounded-lg object-cover h-24 w-full"
+          loading="lazy"
+        />
+      </div>
+
+      <button
+        (click)="toggleFavorite()"
+        [class.bg-primary]="isFavorite(movie.imdbID)"
+        [class.bg-secondary]="!isFavorite(movie.imdbID)"
+        [class.hover:bg-secondary/80]="!isFavorite(movie.imdbID)"
+        class="mt-4 w-full py-3 px-4 rounded-lg flex items-center justify-center gap-2 text-white"
+      >
+        <i class="lucide lucide-heart" [class.filled]="isFavorite(movie.imdbID)"></i>
+        {{ isFavorite(movie.imdbID) ? 'Remove from Favorites' : 'Add to Favorites' }}
+      </button>
+    </div>
+
+    <div class="md:col-span-2">
+      <div class="glass-card rounded-lg p-6">
+        <h1 class="text-3xl font-bold mb-2">{{ movie.Title }}</h1>
+        
+        <div class="flex flex-wrap gap-2 mb-4">
+          <span class="px-3 py-1 bg-primary/20 text-primary rounded-full text-sm">
+            {{ movie.Year }}
+          </span>
+          <span class="px-3 py-1 bg-secondary rounded-full text-sm">
+            {{ movie.Runtime }}
+          </span>
+          <span class="px-3 py-1 bg-secondary rounded-full text-sm">
+            {{ movie.imdbRating !== 'N/A' ? 'Rated: ' + movie.imdbRating : 'Not Rated' }}
+          </span>
+        </div>
+
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold mb-2">Plot</h2>
+          <p class="text-white/80">{{ movie.Plot !== 'N/A' ? movie.Plot : 'No plot available.' }}</p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Details</h2>
+            <dl class="space-y-2">
+              <div>
+                <dt class="text-white/60">Genre</dt>
+                <dd>{{ movie.Genre !== 'N/A' ? movie.Genre : 'Unknown' }}</dd>
+              </div>
+              <div>
+                <dt class="text-white/60">Released</dt>
+                <dd>{{ movie.Released !== 'N/A' ? movie.Released : 'Unknown' }}</dd>
+              </div>
+              <div>
+                <dt class="text-white/60">Director</dt>
+                <dd>{{ movie.Director !== 'N/A' ? movie.Director : 'Unknown' }}</dd>
+              </div>
+              <div>
+                <dt class="text-white/60">Box Office</dt>
+                <dd>{{ movie.BoxOffice !== 'N/A' ? movie.BoxOffice : 'Unknown' }}</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Cast & Ratings</h2>
+            <dl class="space-y-2">
+              <div>
+                <dt class="text-white/60">Actors</dt>
+                <dd>{{ movie.Actors !== 'N/A' ? movie.Actors : 'Unknown' }}</dd>
+              </div>
+              <div>
+                <dt class="text-white/60">IMDb Rating</dt>
+                <dd class="flex items-center">
+                  <span class="text-yellow-400 mr-1">★</span>
+                  {{ movie.imdbRating !== 'N/A' ? movie.imdbRating : 'N/A' }} / 10
+                </dd>
+              </div>
+              <div>
+                <dt class="text-white/60">Awards</dt>
+                <dd>{{ movie.Awards !== 'N/A' ? movie.Awards : 'None' }}</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,20 @@
+
+<div class="py-6 animate-fade-in">
+  <h1 class="text-3xl font-bold mb-6 text-center">Your Favorites</h1>
+
+  <div *ngIf="favorites.length === 0" class="text-center my-12">
+    <p class="text-white/80 mb-4">You haven't added any movies to your favorites yet.</p>
+    <a routerLink="/search" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/80 transition-colors">
+      Search for movies
+    </a>
+  </div>
+
+  <ng-container *ngIf="favorites.length > 0">
+    <p class="text-white/70 mb-4 text-center">
+      You have {{ favorites.length }} favorite {{ favorites.length === 1 ? 'movie' : 'movies' }}
+    </p>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+      <app-movie-card *ngFor="let movie of favorites" [movie]="movie"></app-movie-card>
+    </div>
+  </ng-container>
+</div>
